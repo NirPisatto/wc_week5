@@ -1,18 +1,30 @@
 <?php
 
+
     require_once '../models/Post.php';
+    require_once '../admin/post_data.php';
+
 
     // Start PHP session
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
+
     }
 
+
+    var_dump($_SESSION);
     if (!isset($_SESSION['auth'])) {
         header("Location: ../index.php");
         exit();
     }
 
-    $posts = $GLOBALS['posts'];
+    
+
+    $posts = isset($_SESSION['posts']) ? $_SESSION['posts']:[];
+
+    var_dump($posts);
+    // $posts = isset($GLOBALS['posts']) ? $GLOBALS['posts'] : [];
+
     // Query all posts from table
 ?>
 
@@ -49,7 +61,7 @@
                                         <th scope="col">Content</th>
                                         <th scope="col">Image</th>
                                         <th scope="col">
-                                            <a class="btn btn-primary" href="">New Post</a>
+                                            <a class="btn btn-primary" href="../admin/post_form.php">New Post</a>
                                         </th>
                                     </tr>
                                 </thead>
@@ -62,7 +74,7 @@
                                                         <td>' . $post->id . '</td>
                                                         <td>' . $post->title . '</td>
                                                         <td>' . $post->content . '</td>
-                                                        <td><img src="' . $post->imageUrl . '" /></td>
+                                                        <td><img style="max-width: 300px;" src="' . $post->imageUrl . '" /></td>
                                                     </tr>
                                                 ';
                                             }
@@ -86,7 +98,7 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <!-- <script src="js/scripts.js"></script> -->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <!-- * *                               SB Forms JS                               * *-->
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
